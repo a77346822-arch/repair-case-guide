@@ -16,7 +16,6 @@
     --sub:#6b7280;
   }
   *{box-sizing:border-box;}
-  html, body{ height:100%; }
   body{
     margin:0;
     font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
@@ -62,45 +61,6 @@
   }
   @media (max-width:800px){
     .panels{flex-direction:column;}
-  }
-
-  /* 데스크톱: 메인 화면이 스크롤 없이 한 화면(뷰포트)에 맞춰지도록 함 */
-  @media (min-width:801px){
-    header.top{
-      padding:14px 20px 4px;
-    }
-    header.top h1{
-      font-size:19px;
-      margin:0 0 2px;
-    }
-    header.top p{
-      font-size:12px;
-      margin:0;
-    }
-    main#home{
-      height:calc(100vh - 82px);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:8px 20px 14px;
-    }
-    .panels{
-      height:100%;
-      max-width:1200px;
-      width:100%;
-      justify-content:center;
-      align-items:center;
-    }
-    .panel{
-      flex:0 1 auto;
-      height:100%;
-    }
-    .panel img{
-      height:100%;
-      width:auto;
-      max-width:100%;
-      object-fit:contain;
-    }
   }
   .panel{
     position:relative;
