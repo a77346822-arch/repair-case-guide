@@ -76,19 +76,16 @@
   }
   .hotspots{
     position:absolute;
-    top:57.6%;
-    left:2.6%;
-    right:2.6%;
-    height:41.2%;
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    grid-template-rows:repeat(2,1fr);
-    gap:1.6%;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
   }
   .hotspot{
+    position:absolute;
     background:transparent;
     border:none;
-    border-radius:8px;
+    border-radius:6px;
     cursor:pointer;
     padding:0;
     transition:background .12s ease, box-shadow .12s ease;
@@ -97,12 +94,6 @@
     background:rgba(27,79,216,.10);
     box-shadow:inset 0 0 0 2px rgba(27,79,216,.45);
     outline:none;
-  }
-  .hotspot .dot{
-    display:none;
-  }
-  .hotspot.has-cases{
-    box-shadow:inset 0 0 0 2px rgba(27,79,216,.25);
   }
 
   /* Detail view */
@@ -262,29 +253,53 @@
 /* ========================================================
    카테고리 정의
    ======================================================== */
+// 외장/내장 원본 이미지에서 실측한 열(좌우) / 행(상하) 경계 (%)
+const COLS = [
+  [4.64, 21.19],
+  [23.31, 40.53],
+  [42.78, 59.34],
+  [61.46, 78.15],
+  [80.27, 96.29],
+];
+const ROWS_EXTERIOR = [
+  [57.52, 75.88],
+  [77.93, 95.80],
+];
+const ROWS_INTERIOR = [
+  [60.16, 79.00],
+  [79.20, 98.34],
+];
+
+function rect(colIdx, rowIdx, group){
+  const rows = group === "exterior" ? ROWS_EXTERIOR : ROWS_INTERIOR;
+  const [left, right] = COLS[colIdx];
+  const [top, bottom] = rows[rowIdx];
+  return { left, top, width: right - left, height: bottom - top };
+}
+
 const CATEGORIES = [
-  // 외장
-  { id:"paint",     group:"exterior", name:"도장",           icon:"🎨" },
-  { id:"bumper",    group:"exterior", name:"범퍼 / 외장 트림", icon:"🚗" },
-  { id:"lighting",  group:"exterior", name:"등화류",         icon:"💡" },
-  { id:"glass",     group:"exterior", name:"유리",           icon:"🪟" },
-  { id:"wheel",     group:"exterior", name:"휠",             icon:"⚙️" },
-  { id:"tire",      group:"exterior", name:"타이어",         icon:"🛞" },
-  { id:"mirror",    group:"exterior", name:"사이드미러",      icon:"🔍" },
-  { id:"molding",   group:"exterior", name:"몰딩 / 엠블럼",   icon:"✨" },
-  { id:"sunroof",   group:"exterior", name:"선루프",         icon:"🌤️" },
-  { id:"camera",    group:"exterior", name:"카메라 / 센서",   icon:"📷" },
-  // 내장
-  { id:"seat",       group:"interior", name:"시트",           icon:"🪑" },
-  { id:"doortrim",   group:"interior", name:"도어 트림",      icon:"🚪" },
-  { id:"dashboard",  group:"interior", name:"대시보드",       icon:"🎛️" },
-  { id:"console",    group:"interior", name:"센터콘솔",       icon:"🕹️" },
-  { id:"steering",   group:"interior", name:"스티어링 휠",    icon:"🚘" },
-  { id:"cluster",    group:"interior", name:"계기판 / 디스플레이", icon:"📊" },
-  { id:"headliner",  group:"interior", name:"헤드라이너",     icon:"🧵" },
-  { id:"pillar",     group:"interior", name:"필러 트림",      icon:"📏" },
-  { id:"vent",       group:"interior", name:"송풍구",         icon:"🌬️" },
-  { id:"switchbtn",  group:"interior", name:"버튼 / 스위치",  icon:"🔘" },
+  // 외장 (1행: 도장~휠, 2행: 타이어~카메라/센서)
+  { id:"paint",     group:"exterior", name:"도장",              icon:"🎨", rect: rect(0,0,"exterior") },
+  { id:"bumper",    group:"exterior", name:"범퍼 / 외장 트림",   icon:"🚗", rect: rect(1,0,"exterior") },
+  { id:"lighting",  group:"exterior", name:"등화류",            icon:"💡", rect: rect(2,0,"exterior") },
+  { id:"glass",     group:"exterior", name:"유리",              icon:"🪟", rect: rect(3,0,"exterior") },
+  { id:"wheel",     group:"exterior", name:"휠",                icon:"⚙️", rect: rect(4,0,"exterior") },
+  { id:"tire",      group:"exterior", name:"타이어",            icon:"🛞", rect: rect(0,1,"exterior") },
+  { id:"mirror",    group:"exterior", name:"사이드미러",         icon:"🔍", rect: rect(1,1,"exterior") },
+  { id:"molding",   group:"exterior", name:"몰딩 / 엠블럼",      icon:"✨", rect: rect(2,1,"exterior") },
+  { id:"sunroof",   group:"exterior", name:"선루프",            icon:"🌤️", rect: rect(3,1,"exterior") },
+  { id:"camera",    group:"exterior", name:"카메라 / 센서",      icon:"📷", rect: rect(4,1,"exterior") },
+  // 내장 (1행: 시트~스티어링 휠, 2행: 계기판~버튼/스위치)
+  { id:"seat",       group:"interior", name:"시트",                  icon:"🪑", rect: rect(0,0,"interior") },
+  { id:"doortrim",   group:"interior", name:"도어 트림",             icon:"🚪", rect: rect(1,0,"interior") },
+  { id:"dashboard",  group:"interior", name:"대시보드",              icon:"🎛️", rect: rect(2,0,"interior") },
+  { id:"console",    group:"interior", name:"센터콘솔",              icon:"🕹️", rect: rect(3,0,"interior") },
+  { id:"steering",   group:"interior", name:"스티어링 휠",           icon:"🚘", rect: rect(4,0,"interior") },
+  { id:"cluster",    group:"interior", name:"계기판 / 디스플레이",    icon:"📊", rect: rect(0,1,"interior") },
+  { id:"headliner",  group:"interior", name:"헤드라이너",            icon:"🧵", rect: rect(1,1,"interior") },
+  { id:"pillar",     group:"interior", name:"필러 트림",             icon:"📏", rect: rect(2,1,"interior") },
+  { id:"vent",       group:"interior", name:"송풍구",                icon:"🌬️", rect: rect(3,1,"interior") },
+  { id:"switchbtn",  group:"interior", name:"버튼 / 스위치",         icon:"🔘", rect: rect(4,1,"interior") },
 ];
 
 /* ========================================================
@@ -314,10 +329,14 @@ function renderGrid(){
   CATEGORIES.forEach(cat => {
     const btn = document.createElement("button");
     const count = (CASES[cat.id] || []).length;
-    btn.className = "hotspot" + (count > 0 ? " has-cases" : "");
+    btn.className = "hotspot";
     btn.type = "button";
     btn.title = cat.name + (count > 0 ? ` (${count}건)` : "");
     btn.setAttribute("aria-label", cat.name);
+    btn.style.left = cat.rect.left + "%";
+    btn.style.top = cat.rect.top + "%";
+    btn.style.width = cat.rect.width + "%";
+    btn.style.height = cat.rect.height + "%";
     btn.onclick = () => openCategory(cat.id);
     (cat.group === "exterior" ? exWrap : inWrap).appendChild(btn);
   });
