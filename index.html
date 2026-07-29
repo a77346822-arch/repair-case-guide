@@ -261,12 +261,21 @@ const COLS_EXTERIOR = [
   [61.46, 78.15],
   [80.27, 96.29],
 ];
-const COLS_INTERIOR = [
-  [1.12, 16.76],
-  [18.85, 36.86],
-  [38.96, 57.23],
-  [59.33, 76.41],
-  [78.51, 95.07],
+// 내장은 행마다 아이콘 카드 폭이 서로 달라서(예: 필러 트림은 좁고, 송풍구는 넓음)
+// 행별로 별도의 열 좌표 테이블을 사용
+const COLS_INTERIOR_ROW1 = [ // 시트/도어 트림/대시보드/센터콘솔/스티어링 휠
+  [1.25, 16.62],
+  [18.99, 36.73],
+  [39.09, 57.10],
+  [59.46, 76.28],
+  [78.65, 94.94],
+];
+const COLS_INTERIOR_ROW2 = [ // 계기판/헤드라이너/필러 트림/송풍구/버튼·스위치
+  [1.25, 16.56],
+  [18.99, 36.66],
+  [39.16, 54.14],
+  [56.64, 76.21],
+  [78.65, 94.94],
 ];
 const ROWS_EXTERIOR = [
   [57.52, 75.88],
@@ -278,8 +287,14 @@ const ROWS_INTERIOR = [
 ];
 
 function rect(colIdx, rowIdx, group){
-  const cols = group === "exterior" ? COLS_EXTERIOR : COLS_INTERIOR;
-  const rows = group === "exterior" ? ROWS_EXTERIOR : ROWS_INTERIOR;
+  let cols, rows;
+  if(group === "exterior"){
+    cols = COLS_EXTERIOR;
+    rows = ROWS_EXTERIOR;
+  } else {
+    cols = rowIdx === 0 ? COLS_INTERIOR_ROW1 : COLS_INTERIOR_ROW2;
+    rows = ROWS_INTERIOR;
+  }
   const [left, right] = cols[colIdx];
   const [top, bottom] = rows[rowIdx];
   return { left, top, width: right - left, height: bottom - top };
