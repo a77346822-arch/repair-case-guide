@@ -254,12 +254,19 @@
    카테고리 정의
    ======================================================== */
 // 외장/내장 원본 이미지에서 실측한 열(좌우) / 행(상하) 경계 (%)
-const COLS = [
+const COLS_EXTERIOR = [
   [4.64, 21.19],
   [23.31, 40.53],
   [42.78, 59.34],
   [61.46, 78.15],
   [80.27, 96.29],
+];
+const COLS_INTERIOR = [
+  [1.58, 16.43],
+  [19.19, 36.53],
+  [39.29, 56.90],
+  [59.66, 76.08],
+  [78.84, 94.74],
 ];
 const ROWS_EXTERIOR = [
   [57.52, 75.88],
@@ -271,8 +278,9 @@ const ROWS_INTERIOR = [
 ];
 
 function rect(colIdx, rowIdx, group){
+  const cols = group === "exterior" ? COLS_EXTERIOR : COLS_INTERIOR;
   const rows = group === "exterior" ? ROWS_EXTERIOR : ROWS_INTERIOR;
-  const [left, right] = COLS[colIdx];
+  const [left, right] = cols[colIdx];
   const [top, bottom] = rows[rowIdx];
   return { left, top, width: right - left, height: bottom - top };
 }
