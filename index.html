@@ -251,27 +251,27 @@ const COLS_EXTERIOR = [
 ];
 // 내장은 행마다 아이콘 카드 폭이 서로 달라서(예: 필러 트림은 좁고, 송풍구는 넓음)
 // 행별로 별도의 열 좌표 테이블을 사용
-const COLS_INTERIOR_ROW1 = [ // 시트/도어 트림/대시보드/센터콘솔/스티어링 휠
-  [1.25, 16.62],
-  [18.99, 36.73],
-  [39.09, 57.10],
-  [59.46, 76.28],
-  [78.65, 94.94],
+const COLS_INTERIOR_ROW1 = [ // 시트/도어 트림/대시보드/센터콘솔·암레스트/스티어링 휠
+  [1.67, 16.74],
+  [19.29, 36.96],
+  [39.50, 57.26],
+  [59.76, 76.41],
+  [78.91, 95.10],
 ];
-const COLS_INTERIOR_ROW2 = [ // 계기판/헤드라이너/필러 트림/송풍구/버튼·스위치
-  [1.25, 16.56],
-  [18.99, 36.66],
-  [39.16, 54.14],
-  [56.64, 76.21],
-  [78.65, 94.94],
+const COLS_INTERIOR_ROW2 = [ // 계기판/헤드라이너/필러 트림/카펫·바닥매트/버튼·스위치
+  [1.57, 16.80],
+  [19.24, 37.00],
+  [39.46, 54.39],
+  [56.94, 76.41],
+  [78.86, 95.14],
 ];
 const ROWS_EXTERIOR = [
   [57.52, 75.88],
   [77.93, 95.80],
 ];
 const ROWS_INTERIOR = [
-  [60.16, 76.90],
-  [79.10, 95.75],
+  [59.66, 76.77],
+  [79.04, 96.02],
 ];
 
 function rect(colIdx, rowIdx, group){
@@ -304,12 +304,12 @@ const CATEGORIES = [
   { id:"seat",       group:"interior", name:"시트",                  icon:"🪑", rect: rect(0,0,"interior") },
   { id:"doortrim",   group:"interior", name:"도어 트림",             icon:"🚪", rect: rect(1,0,"interior") },
   { id:"dashboard",  group:"interior", name:"대시보드",              icon:"🎛️", rect: rect(2,0,"interior") },
-  { id:"console",    group:"interior", name:"센터콘솔",              icon:"🕹️", rect: rect(3,0,"interior") },
+  { id:"console",    group:"interior", name:"센터콘솔 / 암레스트",    icon:"🕹️", rect: rect(3,0,"interior") },
   { id:"steering",   group:"interior", name:"스티어링 휠",           icon:"🚘", rect: rect(4,0,"interior") },
   { id:"cluster",    group:"interior", name:"계기판 / 디스플레이",    icon:"📊", rect: rect(0,1,"interior") },
   { id:"headliner",  group:"interior", name:"헤드라이너",            icon:"🧵", rect: rect(1,1,"interior") },
   { id:"pillar",     group:"interior", name:"필러 트림",             icon:"📏", rect: rect(2,1,"interior") },
-  { id:"vent",       group:"interior", name:"송풍구",                icon:"🌬️", rect: rect(3,1,"interior") },
+  { id:"carpet",     group:"interior", name:"카펫 / 바닥매트",       icon:"🚗", rect: rect(3,1,"interior") },
   { id:"switchbtn",  group:"interior", name:"버튼 / 스위치",         icon:"🔘", rect: rect(4,1,"interior") },
 ];
 
@@ -323,7 +323,7 @@ const CASES = {
   paint: [], bumper: [], lighting: [], glass: [], wheel: [],
   tire: [], mirror: [], molding: [], sunroof: [], camera: [],
   seat: [], doortrim: [], dashboard: [], console: [], steering: [],
-  cluster: [], headliner: [], pillar: [], vent: [], switchbtn: []
+  cluster: [], headliner: [], pillar: [], carpet: [], switchbtn: []
 };
 
 /* ========================================================
