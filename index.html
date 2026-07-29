@@ -5,196 +5,204 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>정비 사례 가이드</title>
 <style>
-  :root{
-    --blue:#1b4fd8;
-    --blue-dark:#0f2f8a;
-    --dark:#1c2230;
-    --bg:#f4f6fb;
-    --card:#ffffff;
-    --line:#e2e6ef;
-    --text:#1c2230;
-    --sub:#6b7280;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-    background:var(--bg);
-    color:var(--text);
-  }
-  header.top{
-    max-width:1200px;
-    margin:0 auto;
-    padding:24px 20px 0;
-    text-align:center;
-  }
-  header.top h1{
-    font-size:26px;
-    margin:0 0 6px;
-  }
-  header.top p{
-    color:var(--sub);
-    margin:0 0 18px;
-    font-size:14px;
-  }
-  .banner{
-    max-width:1200px;
-    margin:0 auto 28px;
-    padding:0 20px;
-  }
-  .banner img{
-    width:100%;
-    height:auto;
-    display:block;
-    border-radius:16px;
-    box-shadow:0 6px 24px rgba(20,30,60,.10);
-  }
-  main{
-    max-width:1200px;
-    margin:0 auto;
-    padding:0 20px 60px;
-  }
-  .panels{
-    display:flex;
-    gap:20px;
-    align-items:flex-start;
-  }
-  @media (max-width:800px){
-    .panels{flex-direction:column;}
-  }
-  .panel{
-    position:relative;
-    flex:1 1 0;
-    min-width:0;
-    line-height:0; /* remove inline-img gap */
-  }
-  .panel img{
-    width:100%;
-    height:auto;
-    display:block;
-    border-radius:14px;
-  }
-  .hotspots{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-  }
-  .hotspot{
-    position:absolute;
-    background:transparent;
-    border:none;
-    border-radius:6px;
-    cursor:pointer;
-    padding:0;
-    transition:background .12s ease, box-shadow .12s ease;
-  }
-  .hotspot:hover, .hotspot:focus-visible{
-    background:rgba(27,79,216,.10);
-    box-shadow:inset 0 0 0 2px rgba(27,79,216,.45);
-    outline:none;
-  }
-
-  /* Detail view */
-  #detail{
-    display:none;
-    max-width:900px;
-    margin:0 auto;
-    padding:24px 20px 60px;
-  }
-  .back-btn{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    background:none;
-    border:1px solid var(--line);
-    border-radius:20px;
-    padding:8px 16px;
-    font-size:13px;
-    color:var(--text);
-    cursor:pointer;
-    margin-bottom:20px;
-    font-family:inherit;
-  }
-  .back-btn:hover{border-color:var(--blue);color:var(--blue);}
-  .detail-head{
-    margin-bottom:22px;
-  }
-  .detail-head .eyebrow{
-    font-size:13px;
-    color:var(--blue);
-    font-weight:700;
-    margin-bottom:2px;
-  }
-  .detail-head h2{
-    margin:0;
-    font-size:24px;
-  }
-  .case-list{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-  }
-  .case-item{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:12px;
-    padding:16px 18px;
-    cursor:pointer;
-    transition:border-color .12s ease, box-shadow .12s ease;
-  }
-  .case-item:hover{
-    border-color:var(--blue);
-    box-shadow:0 4px 14px rgba(20,30,60,.08);
-  }
-  .case-item .c-title{
-    font-size:15px;
-    font-weight:600;
-  }
-  .case-item .c-date{
-    font-size:12px;
-    color:var(--sub);
-    margin-top:4px;
-  }
-  .empty{
-    text-align:center;
-    padding:60px 20px;
-    color:var(--sub);
-    border:1px dashed var(--line);
-    border-radius:14px;
-    font-size:14px;
-    line-height:1.7;
-  }
-  .empty b{color:var(--text);}
-
-  /* Case detail modal-ish view */
-  #caseDetail{
-    display:none;
-    max-width:800px;
-    margin:0 auto;
-    padding:24px 20px 60px;
-  }
-  .case-body{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:14px;
-    padding:24px;
-  }
-  .case-body h3{
-    margin-top:0;
-    font-size:20px;
-  }
-  .case-body .meta{
-    font-size:13px;
-    color:var(--sub);
-    margin-bottom:16px;
-  }
-  .case-body .content{
-    font-size:14px;
-    line-height:1.8;
-    white-space:pre-line;
-  }
+:root{
+  --blue:#1b4fd8;
+  --blue-dark:#0f2f8a;
+  --dark:#1c2230;
+  --bg:#f4f6fb;
+  --card:#ffffff;
+  --line:#e2e6ef;
+  --text:#1c2230;
+  --sub:#6b7280;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+header.top{
+  max-width:1200px;
+  margin:0 auto;
+  padding:24px 20px 0;
+  text-align:center;
+}
+header.top h1{
+  font-size:26px;
+  margin:0 0 6px;
+}
+header.top p{
+  color:var(--sub);
+  margin:0 0 18px;
+  font-size:14px;
+}
+.banner{
+  max-width:1200px;
+  margin:0 auto 28px;
+  padding:0 20px;
+}
+.banner img{
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius:16px;
+  box-shadow:0 6px 24px rgba(20,30,60,.10);
+}
+main{
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 20px 60px;
+}
+.panels{
+  display:flex;
+  gap:20px;
+  align-items:flex-start;
+}
+@media (max-width:800px){
+  .panels{flex-direction:column;}
+}
+.panel{
+  position:relative;
+  flex:1 1 0;
+  min-width:0;
+  line-height:0; /* remove inline-img gap */
+}
+.panel img{
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius:14px;
+}
+.hotspots{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+}
+.hotspot{
+  position:absolute;
+  background:transparent;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  padding:0;
+  transition:background .12s ease, box-shadow .12s ease;
+}
+.hotspot:hover, .hotspot:focus-visible{
+  background:rgba(27,79,216,.10);
+  box-shadow:inset 0 0 0 2px rgba(27,79,216,.45);
+  outline:none;
+}
+/* Detail view */
+#detail{
+  display:none;
+  max-width:900px;
+  margin:0 auto;
+  padding:24px 20px 60px;
+}
+.back-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:none;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:8px 16px;
+  font-size:13px;
+  color:var(--text);
+  cursor:pointer;
+  margin-bottom:20px;
+  font-family:inherit;
+}
+.back-btn:hover{border-color:var(--blue);color:var(--blue);}
+.detail-head{
+  margin-bottom:22px;
+}
+.detail-head .eyebrow{
+  font-size:13px;
+  color:var(--blue);
+  font-weight:700;
+  margin-bottom:2px;
+}
+.detail-head h2{
+  margin:0;
+  font-size:24px;
+}
+.case-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.case-item{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:16px 18px;
+  cursor:pointer;
+  transition:border-color .12s ease, box-shadow .12s ease;
+}
+.case-item:hover{
+  border-color:var(--blue);
+  box-shadow:0 4px 14px rgba(20,30,60,.08);
+}
+.case-item .c-title{
+  font-size:15px;
+  font-weight:600;
+}
+.case-item .c-date{
+  font-size:12px;
+  color:var(--sub);
+  margin-top:4px;
+}
+.empty{
+  text-align:center;
+  padding:60px 20px;
+  color:var(--sub);
+  border:1px dashed var(--line);
+  border-radius:14px;
+  font-size:14px;
+  line-height:1.7;
+}
+.empty b{color:var(--text);}
+/* Case detail modal-ish view */
+#caseDetail{
+  display:none;
+  max-width:800px;
+  margin:0 auto;
+  padding:24px 20px 60px;
+}
+.case-body{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:24px;
+}
+.case-body h3{
+  margin-top:0;
+  font-size:20px;
+}
+.case-body .meta{
+  font-size:13px;
+  color:var(--sub);
+  margin-bottom:16px;
+}
+.case-body .case-img{
+  margin-bottom:18px;
+}
+.case-body .case-img img{
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius:10px;
+  border:1px solid var(--line);
+}
+.case-body .content{
+  font-size:14px;
+  line-height:1.8;
+  white-space:pre-line;
+}
 </style>
 </head>
 <body>
@@ -233,6 +241,7 @@
   <div class="case-body">
     <h3 id="cdTitle"></h3>
     <div class="meta" id="cdMeta"></div>
+    <div class="case-img" id="cdImg"></div>
     <div class="content" id="cdContent"></div>
   </div>
 </div>
@@ -240,7 +249,7 @@
 <script>
 /* ========================================================
    카테고리 정의
-   ======================================================== */
+======================================================== */
 // 외장/내장 원본 이미지에서 실측한 열(좌우) / 행(상하) 경계 (%)
 const COLS_EXTERIOR = [
   [4.64, 21.19],
@@ -249,6 +258,7 @@ const COLS_EXTERIOR = [
   [61.46, 78.15],
   [80.27, 96.29],
 ];
+
 // 내장은 행마다 아이콘 카드 폭이 서로 달라서(예: 필러 트림은 좁고, 송풍구는 넓음)
 // 행별로 별도의 열 좌표 테이블을 사용
 const COLS_INTERIOR_ROW1 = [ // 시트/도어 트림/대시보드/센터콘솔·암레스트/스티어링 휠
@@ -265,6 +275,7 @@ const COLS_INTERIOR_ROW2 = [ // 계기판/헤드라이너/필러 트림/카펫·
   [56.94, 76.41],
   [78.86, 95.14],
 ];
+
 const ROWS_EXTERIOR = [
   [57.52, 75.88],
   [77.93, 95.80],
@@ -290,45 +301,61 @@ function rect(colIdx, rowIdx, group){
 
 const CATEGORIES = [
   // 외장 (1행: 도장~휠, 2행: 타이어~카메라/센서)
-  { id:"paint",     group:"exterior", name:"도장",              icon:"🎨", rect: rect(0,0,"exterior") },
-  { id:"bumper",    group:"exterior", name:"범퍼 / 외장 트림",   icon:"🚗", rect: rect(1,0,"exterior") },
-  { id:"lighting",  group:"exterior", name:"등화류",            icon:"💡", rect: rect(2,0,"exterior") },
-  { id:"glass",     group:"exterior", name:"유리",              icon:"🪟", rect: rect(3,0,"exterior") },
-  { id:"wheel",     group:"exterior", name:"휠",                icon:"⚙️", rect: rect(4,0,"exterior") },
-  { id:"tire",      group:"exterior", name:"타이어",            icon:"🛞", rect: rect(0,1,"exterior") },
-  { id:"mirror",    group:"exterior", name:"사이드미러",         icon:"🔍", rect: rect(1,1,"exterior") },
-  { id:"molding",   group:"exterior", name:"몰딩 / 엠블럼",      icon:"✨", rect: rect(2,1,"exterior") },
-  { id:"sunroof",   group:"exterior", name:"선루프",            icon:"🌤️", rect: rect(3,1,"exterior") },
-  { id:"camera",    group:"exterior", name:"카메라 / 센서",      icon:"📷", rect: rect(4,1,"exterior") },
+  { id:"paint", group:"exterior", name:"도장", icon:"🎨", rect: rect(0,0,"exterior") },
+  { id:"bumper", group:"exterior", name:"범퍼 / 외장 트림", icon:"🚗", rect: rect(1,0,"exterior") },
+  { id:"lighting", group:"exterior", name:"등화류", icon:"💡", rect: rect(2,0,"exterior") },
+  { id:"glass", group:"exterior", name:"유리", icon:"🪟", rect: rect(3,0,"exterior") },
+  { id:"wheel", group:"exterior", name:"휠", icon:"⚙️", rect: rect(4,0,"exterior") },
+  { id:"tire", group:"exterior", name:"타이어", icon:"🛞", rect: rect(0,1,"exterior") },
+  { id:"mirror", group:"exterior", name:"사이드미러", icon:"🔍", rect: rect(1,1,"exterior") },
+  { id:"molding", group:"exterior", name:"몰딩 / 엠블럼", icon:"✨", rect: rect(2,1,"exterior") },
+  { id:"sunroof", group:"exterior", name:"선루프", icon:"🌤️", rect: rect(3,1,"exterior") },
+  { id:"camera", group:"exterior", name:"카메라 / 센서", icon:"📷", rect: rect(4,1,"exterior") },
   // 내장 (1행: 시트~스티어링 휠, 2행: 계기판~버튼/스위치)
-  { id:"seat",       group:"interior", name:"시트",                  icon:"🪑", rect: rect(0,0,"interior") },
-  { id:"doortrim",   group:"interior", name:"도어 트림",             icon:"🚪", rect: rect(1,0,"interior") },
-  { id:"dashboard",  group:"interior", name:"대시보드",              icon:"🎛️", rect: rect(2,0,"interior") },
-  { id:"console",    group:"interior", name:"센터콘솔 / 암레스트",    icon:"🕹️", rect: rect(3,0,"interior") },
-  { id:"steering",   group:"interior", name:"스티어링 휠",           icon:"🚘", rect: rect(4,0,"interior") },
-  { id:"cluster",    group:"interior", name:"계기판 / 디스플레이",    icon:"📊", rect: rect(0,1,"interior") },
-  { id:"headliner",  group:"interior", name:"헤드라이너",            icon:"🧵", rect: rect(1,1,"interior") },
-  { id:"pillar",     group:"interior", name:"필러 트림",             icon:"📏", rect: rect(2,1,"interior") },
-  { id:"carpet",     group:"interior", name:"카펫 / 바닥매트",       icon:"🚗", rect: rect(3,1,"interior") },
-  { id:"switchbtn",  group:"interior", name:"버튼 / 스위치",         icon:"🔘", rect: rect(4,1,"interior") },
+  { id:"seat", group:"interior", name:"시트", icon:"🪑", rect: rect(0,0,"interior") },
+  { id:"doortrim", group:"interior", name:"도어 트림", icon:"🚪", rect: rect(1,0,"interior") },
+  { id:"dashboard", group:"interior", name:"대시보드", icon:"🎛️", rect: rect(2,0,"interior") },
+  { id:"console", group:"interior", name:"센터콘솔 / 암레스트", icon:"🕹️", rect: rect(3,0,"interior") },
+  { id:"steering", group:"interior", name:"스티어링 휠", icon:"🚘", rect: rect(4,0,"interior") },
+  { id:"cluster", group:"interior", name:"계기판 / 디스플레이", icon:"📊", rect: rect(0,1,"interior") },
+  { id:"headliner", group:"interior", name:"헤드라이너", icon:"🧵", rect: rect(1,1,"interior") },
+  { id:"pillar", group:"interior", name:"필러 트림", icon:"📏", rect: rect(2,1,"interior") },
+  { id:"carpet", group:"interior", name:"카펫 / 바닥매트", icon:"🚗", rect: rect(3,1,"interior") },
+  { id:"switchbtn", group:"interior", name:"버튼 / 스위치", icon:"🔘", rect: rect(4,1,"interior") },
 ];
 
 /* ========================================================
    정비 사례 데이터
    -> 앞으로 여기에 사례를 추가하면 됩니다.
    각 카테고리 id 배열에 아래 형식으로 객체를 추가하세요:
-   { title:"사례 제목", date:"2026-07-29", content:"본문 내용..." }
-   ======================================================== */
+   {
+     title:      "목록에 표시될 제목 (예: [번호] 증상명 (부품번호) 적용 모델)",
+     detailTitle:"상세 화면 상단에 표시될 제목 (생략 시 title 사용)",
+     date:       "2026-07-29" (선택, 생략 가능),
+     image:      "assets/cases/파일명.png" (선택, 첨부 이미지가 있을 때만),
+     content:    "본문 내용..."
+   }
+======================================================== */
 const CASES = {
   paint: [], bumper: [], lighting: [], glass: [], wheel: [],
   tire: [], mirror: [], molding: [], sunroof: [], camera: [],
-  seat: [], doortrim: [], dashboard: [], console: [], steering: [],
+  seat: [], doortrim: [],
+  dashboard: [
+    {
+      title: "[51] 중앙 스피커 커버 섬유 보풀 돌출 (20000813331719) X5(G05) / X5M(F95) / X6(G06) / X6M(F96) / X7(G07)",
+      detailTitle: "중앙 스피커 커버 섬유 보풀 돌출 (20000813331719)",
+      date: "",
+      image: "assets/cases/51_center_speaker_cover.png",
+      content: "섬유/보풀이 중앙 스피커 커버의 구멍을 통해 돌출된 경우, 중앙 스피커 커버를 교체해야 합니다."
+    }
+  ],
+  console: [], steering: [],
   cluster: [], headliner: [], pillar: [], carpet: [], switchbtn: []
 };
 
 /* ========================================================
    렌더링
-   ======================================================== */
+======================================================== */
 function catById(id){ return CATEGORIES.find(c => c.id === id); }
 
 function renderGrid(){
@@ -356,10 +383,10 @@ function renderGrid(){
 function openCategory(id){
   const cat = catById(id);
   if(!cat) return;
+
   document.getElementById("home").style.display = "none";
   document.getElementById("caseDetail").style.display = "none";
   document.getElementById("detail").style.display = "block";
-
   document.getElementById("detailTitle").textContent = cat.name;
 
   const list = CASES[id] || [];
@@ -396,11 +423,19 @@ function openCase(catId, idx){
 
   document.getElementById("detail").style.display = "none";
   document.getElementById("caseDetail").style.display = "block";
-
-  document.getElementById("cdTitle").textContent = c.title;
+  document.getElementById("cdTitle").textContent = c.detailTitle || c.title;
   document.getElementById("cdMeta").textContent = `${cat.name}` + (c.date ? " · " + c.date : "");
-  document.getElementById("cdContent").textContent = c.content || "";
 
+  const imgWrap = document.getElementById("cdImg");
+  if(c.image){
+    imgWrap.style.display = "block";
+    imgWrap.innerHTML = `<img src="${c.image}" alt="첨부 이미지">`;
+  } else {
+    imgWrap.style.display = "none";
+    imgWrap.innerHTML = "";
+  }
+
+  document.getElementById("cdContent").textContent = c.content || "";
   document.getElementById("caseBackBtn").onclick = () => openCategory(catId);
 
   location.hash = "#/" + catId + "/" + idx;
@@ -430,7 +465,6 @@ function handleRoute(){
 }
 
 window.addEventListener("hashchange", handleRoute);
-
 renderGrid();
 handleRoute();
 </script>
