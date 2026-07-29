@@ -231,6 +231,10 @@ main{
       <img src="assets/interior.png" alt="내장 부위 안내">
       <div class="hotspots" id="hotspots-interior"></div>
     </div>
+    <div class="panel">
+      <img src="assets/powertrain.png" alt="파워트레인 / 섀시 안내">
+      <div class="hotspots" id="hotspots-powertrain"></div>
+    </div>
   </div>
 </main>
 
@@ -294,14 +298,30 @@ const ROWS_INTERIOR = [
   [79.04, 96.02],
 ];
 
+// 파워트레인/섀시 이미지에서 실측한 열(좌우) / 행(상하) 경계 (%)
+const COLS_POWERTRAIN = [
+  [4.81, 19.61],
+  [23.71, 38.50],
+  [42.60, 57.58],
+  [61.50, 76.47],
+  [80.57, 95.37],
+];
+const ROWS_POWERTRAIN = [
+  [59.30, 76.50],
+  [77.80, 98.50],
+];
+
 function rect(colIdx, rowIdx, group){
   let cols, rows;
   if(group === "exterior"){
     cols = COLS_EXTERIOR;
     rows = ROWS_EXTERIOR;
-  } else {
+  } else if(group === "interior"){
     cols = rowIdx === 0 ? COLS_INTERIOR_ROW1 : COLS_INTERIOR_ROW2;
     rows = ROWS_INTERIOR;
+  } else {
+    cols = COLS_POWERTRAIN;
+    rows = ROWS_POWERTRAIN;
   }
   const [left, right] = cols[colIdx];
   const [top, bottom] = rows[rowIdx];
@@ -331,6 +351,17 @@ const CATEGORIES = [
   { id:"pillar", group:"interior", name:"필러 트림", icon:"📏", rect: rect(2,1,"interior") },
   { id:"carpet", group:"interior", name:"카펫 / 바닥매트", icon:"🚗", rect: rect(3,1,"interior") },
   { id:"switchbtn", group:"interior", name:"버튼 / 스위치", icon:"🔘", rect: rect(4,1,"interior") },
+  // 파워트레인 / 섀시 (1행: 엔진~후륜 차축, 2행: 전륜 서스펜션~차체 하부)
+  { id:"engine", group:"powertrain", name:"엔진", rect: rect(0,0,"powertrain") },
+  { id:"transmission", group:"powertrain", name:"변속기", rect: rect(1,0,"powertrain") },
+  { id:"exhaust", group:"powertrain", name:"배기 시스템", rect: rect(2,0,"powertrain") },
+  { id:"frontaxle", group:"powertrain", name:"전륜 차축", rect: rect(3,0,"powertrain") },
+  { id:"rearaxle", group:"powertrain", name:"후륜 차축", rect: rect(4,0,"powertrain") },
+  { id:"frontsuspension", group:"powertrain", name:"전륜 서스펜션", rect: rect(0,1,"powertrain") },
+  { id:"rearsuspension", group:"powertrain", name:"후륜 서스펜션", rect: rect(1,1,"powertrain") },
+  { id:"brake", group:"powertrain", name:"브레이크", rect: rect(2,1,"powertrain") },
+  { id:"steeringgear", group:"powertrain", name:"조향장치", rect: rect(3,1,"powertrain") },
+  { id:"underbody", group:"powertrain", name:"차체 하부", rect: rect(4,1,"powertrain") },
 ];
 
 /* ========================================================
@@ -369,7 +400,9 @@ const CASES = {
     }
   ],
   console: [], steering: [],
-  cluster: [], headliner: [], pillar: [], carpet: [], switchbtn: []
+  cluster: [], headliner: [], pillar: [], carpet: [], switchbtn: [],
+  engine: [], transmission: [], exhaust: [], frontaxle: [], rearaxle: [],
+  frontsuspension: [], rearsuspension: [], brake: [], steeringgear: [], underbody: []
 };
 
 /* ========================================================
@@ -380,10 +413,14 @@ function catById(id){ return CATEGORIES.find(c => c.id === id); }
 function renderGrid(){
   const exWrap = document.getElementById("hotspots-exterior");
   const inWrap = document.getElementById("hotspots-interior");
+  const ptWrap = document.getElementById("hotspots-powertrain");
   exWrap.innerHTML = "";
   inWrap.innerHTML = "";
+  ptWrap.innerHTML = "";
 
-  CATEGORIES.forEach(cat => {
+  const wrapFor = { exterior: exWrap, interior: inWrap, powertrain: ptWrap };
+
+  CATEGORIES.filter(cat => cat.rect).forEach(cat => {
     const btn = document.createElement("button");
     const count = (CASES[cat.id] || []).length;
     btn.className = "hotspot";
@@ -395,10 +432,9 @@ function renderGrid(){
     btn.style.width = cat.rect.width + "%";
     btn.style.height = cat.rect.height + "%";
     btn.onclick = () => openCategory(cat.id);
-    (cat.group === "exterior" ? exWrap : inWrap).appendChild(btn);
+    wrapFor[cat.group].appendChild(btn);
   });
 }
-
 function openCategory(id){
   const cat = catById(id);
   if(!cat) return;
