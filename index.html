@@ -205,6 +205,19 @@ main{
   color:var(--sub);
   margin-bottom:16px;
 }
+.case-body .target-models{
+  font-size:14px;
+  margin-bottom:16px;
+}
+.case-body .target-models .label{
+  color:var(--sub);
+  margin-right:6px;
+}
+.case-body .target-models .model-code:not(:last-child)::after{
+  content:" / ";
+  color:var(--sub);
+  font-weight:400;
+}
 .case-body .case-img{
   margin-bottom:18px;
 }
@@ -265,6 +278,7 @@ main{
   <div class="case-body">
     <h3 id="cdTitle"></h3>
     <div class="meta" id="cdMeta"></div>
+    <div class="target-models" id="cdModels"></div>
     <div class="case-img" id="cdImg"></div>
     <div class="content" id="cdContent"></div>
   </div>
@@ -376,6 +390,7 @@ const CATEGORIES = [
      detailTitle:"상세 화면 상단에 표시될 제목 (생략 시 title 사용)",
      date:       "2026-07-29" (선택, 생략 가능),
      image:      "assets/cases/파일명.png" (선택, 첨부 이미지가 있을 때만),
+     models:     ["5시리즈(G60)", "X5(G05)"] (상세 화면에 "대상차량"으로 파란색 표시됨),
      content:    "본문 내용..."
    }
 ======================================================== */
@@ -386,6 +401,7 @@ const CASES = {
       title: "[51] 키드니그릴 클리어코팅 벗겨짐 - <span class=\"model-code\">5시리즈(G60)</span>",
       detailTitle: "키드니그릴 클리어코팅 벗겨짐 - 5시리즈(G60)",
       date: "",
+      models: ["5시리즈(G60)"],
       image: "assets/cases/51_kidney_grille_clearcoat.png",
       content: "키드니 그릴의 클리어 코팅이 벗겨진 경우에는 해당 부품을 교체해야 합니다."
     }
@@ -398,6 +414,7 @@ const CASES = {
       title: "[51] 중앙 스피커 커버 섬유 보풀 돌출 (20000813331719) <span class=\"model-code\">X5(G05)</span> / <span class=\"model-code\">X5M(F95)</span> / <span class=\"model-code\">X6(G06)</span> / <span class=\"model-code\">X6M(F96)</span> / <span class=\"model-code\">X7(G07)</span>",
       detailTitle: "중앙 스피커 커버 섬유 보풀 돌출 (20000813331719)",
       date: "",
+      models: ["X5(G05)", "X5M(F95)", "X6(G06)", "X6M(F96)", "X7(G07)"],
       image: "assets/cases/51_center_speaker_cover.png",
       content: "섬유/보풀이 중앙 스피커 커버의 구멍을 통해 돌출된 경우, 중앙 스피커 커버를 교체해야 합니다."
     }
@@ -407,6 +424,7 @@ const CASES = {
       title: "[65] 컨트롤러가 공기 찬 것처럼 들뜸 - <span class=\"model-code\">M2(F87)</span> / <span class=\"model-code\">3시리즈(G20, G21)</span> / <span class=\"model-code\">M3(G80, G81)</span> / <span class=\"model-code\">4시리즈(G26)</span> / <span class=\"model-code\">M4(G82/G83)</span> / <span class=\"model-code\">X5(G05)</span> / <span class=\"model-code\">X5M(F95)</span> / <span class=\"model-code\">X6(G06)</span> / <span class=\"model-code\">X6M(F96)</span> / <span class=\"model-code\">X7(G07)</span> / <span class=\"model-code\">XM(G09)</span>",
       detailTitle: "컨트롤러가 공기 찬 것처럼 들뜸",
       date: "",
+      models: ["M2(F87)", "3시리즈(G20, G21)", "M3(G80, G81)", "4시리즈(G26)", "M4(G82/G83)", "X5(G05)", "X5M(F95)", "X6(G06)", "X6M(F96)", "X7(G07)", "XM(G09)"],
       image: "assets/cases/65_controller_lifting.png",
       content: "외부 손상 및 탈거 흔적이 없다면, 컨트롤러 자체 불량으로 교환이 필요합니다."
     }
@@ -492,6 +510,16 @@ function openCase(catId, idx){
   document.getElementById("caseDetail").style.display = "block";
   document.getElementById("cdTitle").textContent = c.detailTitle || c.title;
   document.getElementById("cdMeta").textContent = `${cat.name}` + (c.date ? " · " + c.date : "");
+
+  const modelsWrap = document.getElementById("cdModels");
+  if(c.models && c.models.length){
+    modelsWrap.style.display = "block";
+    modelsWrap.innerHTML = `<span class="label">대상차량</span>` +
+      c.models.map(m => `<span class="model-code">${m}</span>`).join("");
+  } else {
+    modelsWrap.style.display = "none";
+    modelsWrap.innerHTML = "";
+  }
 
   const imgWrap = document.getElementById("cdImg");
   if(c.image){
