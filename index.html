@@ -210,8 +210,9 @@ main{
   margin-bottom:16px;
 }
 .case-body .target-models .label{
+  display:block;
   color:var(--sub);
-  margin-right:6px;
+  margin-bottom:6px;
 }
 .case-body .target-models .model-code:not(:last-child)::after{
   content:" / ";
@@ -386,11 +387,11 @@ const CATEGORIES = [
    -> 앞으로 여기에 사례를 추가하면 됩니다.
    각 카테고리 id 배열에 아래 형식으로 객체를 추가하세요:
    {
-     title:      "목록에 표시될 제목 (예: [번호] 증상명 (부품번호) 적용 모델)",
+     title:      "목록에 표시될 제목 (예: [번호] 증상명 (부품번호), 모델명은 넣지 않음)",
      detailTitle:"상세 화면 상단에 표시될 제목 (생략 시 title 사용)",
      date:       "2026-07-29" (선택, 생략 가능),
      image:      "assets/cases/파일명.png" (선택, 첨부 이미지가 있을 때만),
-     models:     ["5시리즈(G60)", "X5(G05)"] (상세 화면에 "대상차량"으로 파란색 표시됨),
+     models:     ["5시리즈(G60)", "X5(G05)"] (상세 화면에 "대상 차종"으로 파란색, 줄바꿈 후 표시됨),
      content:    "본문 내용..."
    }
 ======================================================== */
@@ -398,7 +399,7 @@ const CASES = {
   paint: [],
   bumper: [
     {
-      title: "[51] 키드니그릴 클리어코팅 벗겨짐 - <span class=\"model-code\">5시리즈(G60)</span>",
+      title: "[51] 키드니그릴 클리어코팅 벗겨짐",
       detailTitle: "키드니그릴 클리어코팅 벗겨짐 - 5시리즈(G60)",
       date: "",
       models: ["5시리즈(G60)"],
@@ -411,7 +412,7 @@ const CASES = {
   seat: [], doortrim: [],
   dashboard: [
     {
-      title: "[51] 중앙 스피커 커버 섬유 보풀 돌출 (20000813331719) <span class=\"model-code\">X5(G05)</span> / <span class=\"model-code\">X5M(F95)</span> / <span class=\"model-code\">X6(G06)</span> / <span class=\"model-code\">X6M(F96)</span> / <span class=\"model-code\">X7(G07)</span>",
+      title: "[51] 중앙 스피커 커버 섬유 보풀 돌출 (20000813331719)",
       detailTitle: "중앙 스피커 커버 섬유 보풀 돌출 (20000813331719)",
       date: "",
       models: ["X5(G05)", "X5M(F95)", "X6(G06)", "X6M(F96)", "X7(G07)"],
@@ -421,7 +422,7 @@ const CASES = {
   ],
   console: [
     {
-      title: "[65] 컨트롤러가 공기 찬 것처럼 들뜸 - <span class=\"model-code\">M2(F87)</span> / <span class=\"model-code\">3시리즈(G20, G21)</span> / <span class=\"model-code\">M3(G80, G81)</span> / <span class=\"model-code\">4시리즈(G26)</span> / <span class=\"model-code\">M4(G82/G83)</span> / <span class=\"model-code\">X5(G05)</span> / <span class=\"model-code\">X5M(F95)</span> / <span class=\"model-code\">X6(G06)</span> / <span class=\"model-code\">X6M(F96)</span> / <span class=\"model-code\">X7(G07)</span> / <span class=\"model-code\">XM(G09)</span>",
+      title: "[65] 컨트롤러가 공기 찬 것처럼 들뜸",
       detailTitle: "컨트롤러가 공기 찬 것처럼 들뜸",
       date: "",
       models: ["M2(F87)", "3시리즈(G20, G21)", "M3(G80, G81)", "4시리즈(G26)", "M4(G82/G83)", "X5(G05)", "X5M(F95)", "X6(G06)", "X6M(F96)", "X7(G07)", "XM(G09)"],
@@ -514,7 +515,7 @@ function openCase(catId, idx){
   const modelsWrap = document.getElementById("cdModels");
   if(c.models && c.models.length){
     modelsWrap.style.display = "block";
-    modelsWrap.innerHTML = `<span class="label">대상차량</span>` +
+    modelsWrap.innerHTML = `<span class="label">대상 차종</span>` +
       c.models.map(m => `<span class="model-code">${m}</span>`).join("");
   } else {
     modelsWrap.style.display = "none";
