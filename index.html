@@ -109,6 +109,11 @@ main{
   margin:0 auto;
   padding:24px 20px 60px;
 }
+.back-row{
+  display:flex;
+  gap:8px;
+  margin-bottom:20px;
+}
 .back-btn{
   display:inline-flex;
   align-items:center;
@@ -120,7 +125,6 @@ main{
   font-size:13px;
   color:var(--text);
   cursor:pointer;
-  margin-bottom:20px;
   font-family:inherit;
 }
 .back-btn:hover{border-color:var(--blue);color:var(--blue);}
@@ -241,7 +245,10 @@ main{
 </main>
 
 <div id="detail">
-  <button class="back-btn" onclick="goHome()">← 목록으로</button>
+  <div class="back-row">
+    <button class="back-btn" onclick="goHome()">← 목록으로</button>
+    <button class="back-btn" onclick="goHome()">처음 화면으로</button>
+  </div>
   <div class="detail-head">
     <div>
       <div class="eyebrow">정비 사례</div>
@@ -252,7 +259,10 @@ main{
 </div>
 
 <div id="caseDetail">
-  <button class="back-btn" id="caseBackBtn">← 목록으로</button>
+  <div class="back-row">
+    <button class="back-btn" id="caseBackBtn">← 목록으로</button>
+    <button class="back-btn" onclick="goHome()">처음 화면으로</button>
+  </div>
   <div class="case-body">
     <h3 id="cdTitle"></h3>
     <div class="meta" id="cdMeta"></div>
