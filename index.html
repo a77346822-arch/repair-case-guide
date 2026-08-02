@@ -234,6 +234,22 @@ main{
   line-height:1.8;
   white-space:pre-line;
 }
+.case-body .content-block{
+  margin-bottom:16px;
+}
+.case-body .content-block:last-child{
+  margin-bottom:0;
+}
+.case-body .content-block .content-label{
+  font-size:14px;
+  font-weight:700;
+  margin-bottom:6px;
+}
+.case-body .content-block .content-text{
+  font-size:14px;
+  line-height:1.8;
+  white-space:pre-line;
+}
 </style>
 </head>
 <body>
@@ -392,7 +408,8 @@ const CATEGORIES = [
      date:       "2026-07-29" (선택, 생략 가능),
      image:      "assets/cases/파일명.png" (선택, 첨부 이미지가 있을 때만),
      models:     ["5시리즈(G60)", "X5(G05)"] (상세 화면에 "대상 차종"으로 파란색, 줄바꿈 후 표시됨),
-     content:    "본문 내용..."
+     symptom:    "증상 내용",
+     action:     "조치사항 내용"
    }
 ======================================================== */
 const CASES = {
@@ -404,7 +421,8 @@ const CASES = {
       date: "",
       models: ["5시리즈(G60)"],
       image: "assets/cases/51_kidney_grille_clearcoat.png",
-      content: "키드니 그릴의 클리어 코팅이 벗겨진 경우에는 해당 부품을 교체해야 합니다."
+      symptom: "키드니 그릴 클리어 코팅 박리",
+      action: "키드니 그릴 교체"
     }
   ],
   lighting: [], glass: [], wheel: [],
@@ -417,7 +435,8 @@ const CASES = {
       date: "",
       models: ["X5(G05)", "X5M(F95)", "X6(G06)", "X6M(F96)", "X7(G07)"],
       image: "assets/cases/51_center_speaker_cover.png",
-      content: "섬유/보풀이 중앙 스피커 커버의 구멍을 통해 돌출된 경우, 중앙 스피커 커버를 교체해야 합니다."
+      symptom: "중앙 스피커 커버의 구멍 사이로 섬유/보풀이 돌출됨",
+      action: "중앙 스피커 커버 교체"
     }
   ],
   console: [
@@ -427,7 +446,8 @@ const CASES = {
       date: "",
       models: ["M2(F87)", "3시리즈(G20, G21)", "M3(G80, G81)", "4시리즈(G26)", "M4(G82/G83)", "X5(G05)", "X5M(F95)", "X6(G06)", "X6M(F96)", "X7(G07)", "XM(G09)"],
       image: "assets/cases/65_controller_lifting.png",
-      content: "외부 손상 및 탈거 흔적이 없다면, 컨트롤러 자체 불량으로 교환이 필요합니다."
+      symptom: "컨트롤러가 공기 찬 것처럼 들뜸",
+      action: "컨트롤러 교체"
     }
   ],
   steering: [],
@@ -531,7 +551,14 @@ function openCase(catId, idx){
     imgWrap.innerHTML = "";
   }
 
-  document.getElementById("cdContent").textContent = c.content || "";
+  const contentWrap = document.getElementById("cdContent");
+  if(c.symptom || c.action){
+    contentWrap.innerHTML =
+      (c.symptom ? `<div class="content-block"><div class="content-label">증상</div><div class="content-text">${c.symptom}</div></div>` : "") +
+      (c.action ? `<div class="content-block"><div class="content-label">조치사항</div><div class="content-text">${c.action}</div></div>` : "");
+  } else {
+    contentWrap.textContent = c.content || "";
+  }
   document.getElementById("caseBackBtn").onclick = () => openCategory(catId);
 
   history.pushState(null, "", "#/" + catId + "/" + idx);
