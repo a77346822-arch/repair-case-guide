@@ -615,7 +615,7 @@ function openCase(catId, idx){
   if(c.models && c.models.length){
     modelsWrap.style.display = "block";
     modelsWrap.innerHTML = `<span class="label">대상 차종</span>` +
-      c.models.map(m => `<span class="model-code">${m}</span>`).join("") +
+      `<span class="models-list">` + c.models.map(m => `<span class="model-code">${m}</span>`).join("") + `</span>` +
       (c.period ? `<div class="period">${c.period}</div>` : "");
   } else {
     modelsWrap.style.display = "none";
