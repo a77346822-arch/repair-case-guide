@@ -219,6 +219,11 @@ main{
   color:var(--sub);
   font-weight:400;
 }
+.case-body .target-models .period{
+  margin-top:6px;
+  font-size:13px;
+  color:var(--sub);
+}
 .case-body .case-img{
   margin-bottom:18px;
 }
@@ -512,7 +517,18 @@ const CASES = {
       symptom: "고압 펌프 가스켓에서 오일 누설",
       action: "고압 펌프 가스켓 교체"
     }
-  ], transmission: [], exhaust: [], frontaxle: [], rearaxle: [],
+  ], transmission: [], exhaust: [], frontaxle: [
+    {
+      title: "[31] 앞차축 위시본 벨로즈 손상(20001130391941)",
+      detailTitle: "앞차축 위시본 벨로즈 손상(20001130391941)",
+      date: "",
+      models: ["5시리즈(G60, G61)", "7시리즈(G70)"],
+      period: "생산기간 2022년 6월 30일 ~ 2025년 4월 30일",
+      image: "assets/cases/31_front_wishbone_bellows_damage.png",
+      symptom: "앞차축 위시본 벨로즈 손상",
+      action: "양쪽 위시본 교체"
+    }
+  ], rearaxle: [],
   frontsuspension: [], rearsuspension: [], brake: [], steeringgear: [], underbody: []
 };
 
@@ -599,7 +615,8 @@ function openCase(catId, idx){
   if(c.models && c.models.length){
     modelsWrap.style.display = "block";
     modelsWrap.innerHTML = `<span class="label">대상 차종</span>` +
-      c.models.map(m => `<span class="model-code">${m}</span>`).join("");
+      c.models.map(m => `<span class="model-code">${m}</span>`).join("") +
+      (c.period ? `<div class="period">${c.period}</div>` : "");
   } else {
     modelsWrap.style.display = "none";
     modelsWrap.innerHTML = "";
