@@ -556,17 +556,20 @@ function openCategory(id){
   document.getElementById("detailTitle").textContent = cat.name;
 
   const list = CASES[id] || [];
+  const sortedList = list
+    .map((c, idx) => ({ c, idx }))
+    .sort((a, b) => a.c.title.localeCompare(b.c.title, "ko"));
   const listEl = document.getElementById("caseList");
   listEl.innerHTML = "";
 
-  if(list.length === 0){
+  if(sortedList.length === 0){
     listEl.innerHTML = `
       <div class="empty">
         <b>${cat.name}</b> 관련 등록된 정비 사례가 아직 없습니다.<br>
         정비 사례가 추가되면 이곳에 표시됩니다.
       </div>`;
   } else {
-    list.forEach((c, idx) => {
+    sortedList.forEach(({c, idx}) => {
       const item = document.createElement("div");
       item.className = "case-item";
       item.onclick = () => openCase(id, idx);
