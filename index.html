@@ -255,6 +255,14 @@ main{
   line-height:1.8;
   white-space:pre-line;
 }
+.case-body .content-block .action-image{
+  display:block;
+  width:100%;
+  height:auto;
+  margin-top:12px;
+  border-radius:var(--radius);
+  border:1px solid var(--line);
+}
 </style>
 </head>
 <body>
@@ -562,7 +570,8 @@ const CASES = {
       models: ["1시리즈(F40, F52)", "2시리즈(F44, F45)", "X1(F48, U11)", "X2(F39, U10)", "X3(G01)", "X4(G02)", "X5(G05)", "X5M(F95)", "X6(G06)", "X6M(F96)", "X7(G07)"],
       image: "assets/cases/31_front_output_shaft_bellows_contamination.png",
       symptom: "앞 출력축 벨로즈 오염",
-      action: "칼라 볼트 및 압력 스프링 교체 후 오염 부위 세척"
+      action: "칼라 볼트 및 압력 스프링 교체 후 오염 부위 세척",
+      actionImage: "assets/cases/31_front_output_shaft_bellows_procedure.png"
     }
   ], rearaxle: [],
   frontsuspension: [], rearsuspension: [], brake: [], steeringgear: [], underbody: []
@@ -671,7 +680,9 @@ function openCase(catId, idx){
   if(c.symptom || c.action){
     contentWrap.innerHTML =
       (c.symptom ? `<div class="content-block"><div class="content-label">증상</div><div class="content-text">${c.symptom}</div></div>` : "") +
-      (c.action ? `<div class="content-block"><div class="content-label">조치사항</div><div class="content-text">${c.action}</div></div>` : "");
+      (c.action ? `<div class="content-block"><div class="content-label">조치사항</div><div class="content-text">${c.action}</div>` +
+        (c.actionImage ? `<img class="action-image" src="${c.actionImage}" alt="조치 절차 이미지">` : "") +
+        `</div>` : "");
   } else {
     contentWrap.textContent = c.content || "";
   }
