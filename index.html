@@ -263,6 +263,14 @@ main{
   border-radius:var(--radius);
   border:1px solid var(--line);
 }
+.case-body .content-block .procedure-image{
+  display:block;
+  width:100%;
+  height:auto;
+  margin-top:8px;
+  border-radius:var(--radius);
+  border:1px solid var(--line);
+}
 </style>
 </head>
 <body>
@@ -490,7 +498,8 @@ const CASES = {
       period: "선택사양: SA711 또는 SA712",
       image: "assets/cases/52_sport_seat_side_cover_loose.png",
       symptom: "스포츠 시트 측면 커버 느슨함",
-      action: "스포츠 시트 외부 트림 교체 후, 케이블 밴드로 측면 커버 추가 고정"
+      action: "스포츠 시트 외부 트림 교체 후, 케이블 밴드로 측면 커버 추가 고정",
+      actionImage: "assets/cases/52_sport_seat_side_cover_loose_procedure.png"
     }
   ], doortrim: [],
   dashboard: [
@@ -753,6 +762,10 @@ function openCase(catId, idx){
       (c.symptom ? `<div class="content-block"><div class="content-label">증상</div><div class="content-text">${c.symptom}</div></div>` : "") +
       (c.action ? `<div class="content-block"><div class="content-label">조치사항</div><div class="content-text">${c.action}</div>` +
         (c.actionImage ? `<img class="action-image" src="${c.actionImage}" alt="조치 절차 이미지">` : "") +
+        `</div>` : "") +
+      (c.procedure || (c.procedureImages && c.procedureImages.length) ? `<div class="content-block"><div class="content-label">작업 절차</div>` +
+        (c.procedure ? `<div class="content-text">${c.procedure}</div>` : "") +
+        (c.procedureImages ? c.procedureImages.map(src => `<img class="procedure-image" src="${src}" alt="작업 절차 이미지">`).join("") : "") +
         `</div>` : "");
   } else {
     contentWrap.textContent = c.content || "";
